@@ -1,21 +1,35 @@
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import styled from "styled-components";
 
 export const Bar = () => {
-  const options = {
+  const [data, updateData] = useState([44, 55, 57, 56, 61, 58, 63, 60, 66]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const val = Math.floor(Math.random() * (20 - 10 + 1)) + 30;
+      let array = [...data, val];
+      console.log(array);
+      array.shift();
+      updateData(array);
+    }, 6000);
+    return () => {
+      window.clearInterval(interval); // clear the interval in the cleanup function
+    };
+  }, [data]);
+  const options = {
     series: [
       {
         name: "Net Profit",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+        data: data,
       },
       {
         name: "Revenue",
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+        data: [76, 85, 101, 98, 87, 105, 91, 88, 94],
       },
       {
         name: "Free Cash Flow",
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+        data: data,
       },
     ],
     chart: {
@@ -40,19 +54,19 @@ export const Bar = () => {
         },
       },
     },
-    colors: ['#dc354646', '#dc354646', '#dc354646'],
+    colors: ["#dc354646", "#dc354646", "#dc354646"],
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
-        shade: 'dark',
-        type: 'vertical',
+        shade: "dark",
+        type: "vertical",
         shadeIntensity: 0.5,
-        gradientToColors: ['#ffc107','#ffc107', '#ffc107'],
+        gradientToColors: ["#ffc107", "#ffc107", "#ffc107"],
         inverseColors: true,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100]
-      }
+        stops: [0, 100],
+      },
     },
     stroke: {
       width: 0,
@@ -63,15 +77,15 @@ export const Bar = () => {
     yaxis: {
       labels: {
         style: {
-          colors: '#fff'
-        }
-      }
+          colors: "#fff",
+        },
+      },
     },
     xaxis: {
       labels: {
         style: {
-          colors: '#fff'
-        }
+          colors: "#fff",
+        },
       },
       categories: [
         "Feb",
@@ -91,11 +105,11 @@ export const Bar = () => {
         options: {
           plotOptions: {
             bar: {
-              horizontal: true
-            }
+              horizontal: true,
+            },
           },
-        }
-      }
+        },
+      },
     ],
     tooltip: {
       y: {
@@ -105,6 +119,7 @@ export const Bar = () => {
       },
     },
   };
+
   return (
     <DivBar>
       <ReactApexChart
